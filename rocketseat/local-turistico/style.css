@@ -1,0 +1,24 @@
+/*Reset básico para zerar margens e alinhamentos*/
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/*Estilização global do corpo da página*/
+body {
+    font-family: 'Opens Sans', sans-serif;
+    background-color: #F9F9F9;
+    color: #202024;
+    padding: 20px;
+}
+
+/*Container principal da página*/
+#page {
+    max-width: 800px;
+    margin: 0 auto;
+    background: #FFFFFF;
+    padding: 32px;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
