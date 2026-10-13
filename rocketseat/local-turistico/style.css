@@ -64,6 +64,8 @@ header h1 {
 /*Seção sobre o destino*/
 #about {
     margin-bottom: 32px;
+    padding-bottom: 32px;
+    border-bottom: 1px solid #E6E6E6;
 }
 
 #about p {
@@ -116,4 +118,58 @@ h2 {
     object-fit: fill; 
     border-radius: 12px;
     margin-bottom: 16px;
+}
+
+/*Título dos cards*/
+h3 {
+    font-size: 28px;
+    font-weight: bold;
+    color: #1B1B1B;
+    margin-bottom: 16px;
+}
+
+/*Texto dos cards*/
+.card p {
+    font-size: 16px;
+    line-height: 1.6;
+    color: #333333;
+    margin-bottom: 16px;
+}
+
+/*Bloco de destaque*/
+.good-for {
+    background-color: #F9F4F0;
+    padding: 16px 20px;
+    border-radius: 8px;
+    margin-top: 12px;
+}
+
+/*Faixa/Título Azul do "Bom para:"*/
+.good-for span {
+    font-size: 16px;
+    font-weight: bold;
+    color: #0C51A7;
+    display: block;
+    margin-bottom: 8px;
+}
+
+.good-for ul {
+    list-style-position: inside;
+    color: #333333;
+    font-size: 16px;
+}
+
+/*Rodapé*/
+footer {
+    text-align: center;
+    padding: 24px 0;
+    margin-top: 32px;
+    border-top: 1px solid #E6E6E6;
+    font-size: 14px;
+    color: #696969;
+}
+
+footer span {
+    font-weight: bold;
+    color: #1B1B1B;
 }
