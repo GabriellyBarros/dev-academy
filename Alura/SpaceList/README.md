@@ -117,8 +117,7 @@ SpaceList/
 Não é necessário instalar ferramentas ou executar comandos de compilação:
 
 1. Clone ou baixe este repositório para o seu computador.
-2. Acesse a pasta do projeto:
-   `c:\Users\Givanildo Barros\Downloads\dev-academy-main\dev-academy-main\Alura\SpaceList`
+2. Acesse a pasta do projeto.
 3. Dê um **duplo clique no arquivo `index.html`**.
 4. A aplicação abrirá diretamente no seu navegador padrão (Google Chrome, Microsoft Edge, Mozilla Firefox, Opera, etc.).
 
