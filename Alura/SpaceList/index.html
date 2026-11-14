@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="pt-BR" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SpaceList - Painel de Controle de Missões Espaciais</title>
+  
+  <!-- Fonte moderna Inter do Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Orbitron:wght@600;800&display=swap" rel="stylesheet">
+  
+  <!-- Folha de estilos CSS -->
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <!-- Fundo com estrelas animadas para o Espaço Profundo -->
+  <div class="stars-container" id="stars-container" aria-hidden="true"></div>
+
+  <!-- Container Principal da Aplicação -->
+  <main class="app-container" id="app-container">
+    
+    <!-- 1. Cabeçalho Principal e Identidade -->
+    <header class="app-header" id="tour-header">
+      <div class="header-brand">
+        <div class="brand-icon">
+          <span class="rocket-emoji">🚀</span>
+        </div>
+        <div class="brand-text">
+          <h1 class="app-title">SpaceList</h1>
+          <p class="app-tagline">Centro de Controle e Gestão de Missões Espaciais</p>
+        </div>
+      </div>
+
+      <!-- Controles de Cabeçalho: Alternância de Tema e Ajuda/Tutorial -->
+      <div class="header-actions">
+        <button id="theme-toggle-btn" class="btn-theme" title="Alternar entre Base de Lançamento e Espaço Profundo" aria-label="Alternar tema">
+          <span class="theme-icon" id="theme-icon">🌙</span>
+          <span class="theme-text" id="theme-text">Espaço Profundo</span>
+        </button>
+
+        <button id="restart-tour-btn" class="btn-help" title="Iniciar Tour de Reconhecimento com o Astronauta" aria-label="Ajuda e tutorial">
+          <span class="help-icon">👨‍🚀</span>
+          <span>Tour Guiado</span>
+        </button>
+      </div>
+    </header>
+
+    <!-- 2. Painel de Estatísticas e Progresso Espacial -->
+    <section class="stats-dashboard" id="tour-stats" aria-label="Painel de Estatísticas da Missão">
+      <div class="stats-grid">
+        <!-- Card Total -->
+        <div class="stat-card stat-total">
+          <div class="stat-icon">🛰️</div>
+          <div class="stat-info">
+            <span class="stat-label">Total de Missões</span>
+            <span class="stat-value" id="stat-total">0</span>
+          </div>
+        </div>
+
+        <!-- Card Pendentes -->
+        <div class="stat-card stat-pending">
+          <div class="stat-icon">⏳</div>
+          <div class="stat-info">
+            <span class="stat-label">Pendentes</span>
+            <span class="stat-value" id="stat-pending">0</span>
+          </div>
+        </div>
+
+        <!-- Card Em Andamento -->
+        <div class="stat-card stat-in-progress">
+          <div class="stat-icon">☄️</div>
+          <div class="stat-info">
+            <span class="stat-label">Em Andamento</span>
+            <span class="stat-value" id="stat-in-progress">0</span>
+          </div>
+        </div>
+
+        <!-- Card Concluídas -->
+        <div class="stat-card stat-completed">
+          <div class="stat-icon">🚩</div>
+          <div class="stat-info">
+            <span class="stat-label">Concluídas</span>
+            <span class="stat-value" id="stat-completed">0</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Barra de Progresso Dinâmica da Frota -->
+      <div class="progress-section">
+        <div class="progress-header">
+          <span class="progress-title">Taxa de Conclusão da Frota:</span>
+          <span class="progress-percentage" id="progress-percentage">0%</span>
+        </div>
+        <div class="progress-bar-bg" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
+          <div class="progress-bar-fill" id="progress-bar-fill" style="width: 0%;">
+            <span class="progress-rocket">🚀</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 3. Mascote Astronauta e Banner de Status da Tripulação -->
+    <section class="mascot-section" id="tour-mascot" aria-label="Status do Astronauta Mascote">
+      <div class="mascot-card" id="mascot-card">
+        <!-- SVG do Mascote Astronauta -->
+        <div class="mascot-avatar" id="mascot-avatar">
+          <svg class="astronaut-svg" viewBox="0 0 160 160" width="110" height="110" aria-hidden="true">
+            <defs>
+              <linearGradient id="suitGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stop-color="#ffffff"/>
+                <stop offset="100%" stop-color="#cbd5e1"/>
+              </linearGradient>
+              <linearGradient id="visorGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stop-color="#38bdf8"/>
+                <stop offset="40%" stop-color="#6366f1"/>
+                <stop offset="100%" stop-color="#0f172a"/>
+              </linearGradient>
+              <radialGradient id="jetFire" cx="50%" cy="50%" r="50%">
+                <stop offset="0%" stop-color="#fef08a"/>
+                <stop offset="60%" stop-color="#f97316"/>
+                <stop offset="100%" stop-color="#dc2626"/>
+              </radialGradient>
+            </defs>
+            
+            <!-- Jetpack / Mochila Espacial com Chamas -->
+            <g class="jetpack-group">
+              <rect x="36" y="60" width="20" height="42" rx="6" fill="#64748b" />
+              <rect x="104" y="60" width="20" height="42" rx="6" fill="#64748b" />
+              <!-- Chamas do Jetpack (visíveis em comemoração) -->
+              <path class="jetpack-flame flame-left" d="M 40 102 Q 46 128 46 138 Q 46 128 52 102 Z" fill="url(#jetFire)" />
+              <path class="jetpack-flame flame-right" d="M 108 102 Q 114 128 114 138 Q 114 128 120 102 Z" fill="url(#jetFire)" />
+            </g>
+
+            <!-- Corpo e Traje Espacial -->
+            <rect x="52" y="66" width="56" height="52" rx="16" fill="url(#suitGrad)" stroke="#94a3b8" stroke-width="2"/>
+            <rect x="65" y="80" width="30" height="18" rx="4" fill="#334155"/>
+            <!-- Luzes do painel do peito -->
+            <circle cx="72" cy="89" r="3" fill="#22c55e" class="indicator-blink" />
+            <circle cx="80" cy="89" r="3" fill="#38bdf8" />
+            <circle cx="88" cy="89" r="3" fill="#f59e0b" />
+
+            <!-- Braços do Astronauta -->
+            <g class="astronaut-arms">
+              <ellipse cx="44" cy="84" rx="9" ry="16" transform="rotate(-15 44 84)" fill="url(#suitGrad)" stroke="#94a3b8" stroke-width="2"/>
+              <ellipse cx="116" cy="84" rx="9" ry="16" transform="rotate(15 116 84)" fill="url(#suitGrad)" stroke="#94a3b8" stroke-width="2"/>
+              <!-- Luvas -->
+              <circle cx="39" cy="98" r="8" fill="#475569"/>
+              <circle cx="121" cy="98" r="8" fill="#475569"/>
+            </g>
+
+            <!-- Capacete -->
+            <circle cx="80" cy="46" r="34" fill="url(#suitGrad)" stroke="#94a3b8" stroke-width="3"/>
+            <!-- Viseira Tecnológica com Reflexo -->
+            <ellipse cx="80" cy="46" rx="24" ry="19" fill="url(#visorGrad)" stroke="#1e293b" stroke-width="2"/>
+            <path d="M 64 38 Q 78 32 94 36" stroke="rgba(255,255,255,0.7)" stroke-width="3" stroke-linecap="round" fill="none" />
+            
+            <!-- Antena do Capacete -->
+            <line x1="80" y1="12" x2="80" y2="4" stroke="#94a3b8" stroke-width="3" />
+            <circle cx="80" cy="3" r="4" fill="#ef4444" class="antenna-blink" />
+          </svg>
+        </div>
+
+        <!-- Fala / Status do Mascote -->
+        <div class="mascot-speech">
+          <div class="mascot-badge" id="mascot-status-badge">🛰️ Oficial de Voo: Major Astro</div>
+          <p class="mascot-dialogue" id="mascot-dialogue">
+            Pronto para iniciar novos protocolos! Registre suas tarefas para ativarmos os motores.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 4. Formulário para Adicionar Nova Missão -->
+    <form id="task-form" class="task-form" id="tour-input" aria-label="Cadastrar Nova Missão">
+      <div class="input-group">
+        <span class="input-icon">🎯</span>
+        <input 
+          type="text" 
+          id="task-input" 
+          placeholder="Qual é o próximo objetivo da tripulação?" 
+          autocomplete="off"
+          required
+        />
+        <button type="submit" id="add-btn" class="btn btn-launch">
+          <span>Iniciar Nova Missão 🚀</span>
+        </button>
+      </div>
+      <span id="error-message" class="error-message" role="alert"></span>
+    </form>
+
+    <!-- 5. Filtros e Ações de Gerenciamento da Lista -->
+    <section class="task-controls" id="tour-filters" aria-label="Filtros de Missões">
+      <div class="filters">
+        <button class="filter-btn active" data-filter="all">Todas as Missões</button>
+        <button class="filter-btn" data-filter="pending">⏳ Pendentes</button>
+        <button class="filter-btn" data-filter="in_progress">☄️ Em Andamento</button>
+        <button class="filter-btn" data-filter="completed">🚩 Concluídas</button>
+      </div>
+
+      <button id="clear-completed-btn" class="btn-clear" title="Remover missões finalizadas da tela">
+        🧹 Limpar Missões Concluídas
+      </button>
+    </section>
+
+    <!-- 6. Lista Dinâmica de Missões -->
+    <ul id="task-list" class="task-list" id="tour-list" aria-live="polite">
+      <!-- Inserido dinamicamente via JavaScript -->
+    </ul>
+
+    <!-- 7. Estado Vazio com Tema Espacial -->
+    <div id="empty-state" class="empty-state">
+      <div class="empty-state-visual">
+        <span class="empty-emoji">🗺️🔭</span>
+      </div>
+      <h3 class="empty-title">Nenhuma missão em curso neste quadrante!</h3>
+      <p class="empty-desc">
+        O Major Astro está analisando a rota estelar. Utilize o formulário acima para <strong>Iniciar Nova Missão 🚀</strong> e traçar seus objetivos!
+      </p>
+    </div>
+
+    <!-- 8. Rodapé Acadêmico e Tecnológico -->
+    <footer class="app-footer">
+      <div class="footer-academic">
+        <span>🎓 Projeto Desenvolvido para Fins de Aprendizado Acadêmico e Estudos </span>
+      </div>
+      <div class="footer-meta">
+        <span>SpaceList v3.0 • Sistema de Lista de Tarefas Espaciais</span>
+      </div>
+    </footer>
+  </main>
+
+  <!-- 9. Sistema de Tour Interativo Guiado com o Astronauta -->
+  <div id="tour-backdrop" class="tour-backdrop" aria-hidden="true">
+    <!-- Foguete Espacial animado cruzando a tela em diagonal ao fundo -->
+    <div class="tour-rocket-voyage" aria-hidden="true">
+      <div class="tour-rocket-trail"></div>
+      <div class="tour-rocket-ship">🚀</div>
+    </div>
+  </div>
+  
+  <aside id="tour-box" class="tour-box" role="dialog" aria-modal="true" aria-labelledby="tour-title">
+    <div class="tour-card">
+      <div class="tour-header">
+        <div class="tour-mascot-icon">👨‍🚀</div>
+        <div>
+          <h4 id="tour-title" class="tour-title">Missão de Reconhecimento</h4>
+          <span id="tour-step-counter" class="tour-step-counter">Passo 1 de 6</span>
+        </div>
+      </div>
+      <p id="tour-text" class="tour-text">
+        Olá, cadete espacial! Sou o Major Astro, seu copiloto no SpaceList. Vamos fazer um rápido tour para você dominar todos os comandos da nossa nave!
+      </p>
+      <div class="tour-actions">
+        <button id="tour-skip-btn" class="btn-tour-secondary">Pular Tour</button>
+        <div class="tour-nav-btns">
+          <button id="tour-prev-btn" class="btn-tour-secondary" disabled>Anterior</button>
+          <button id="tour-next-btn" class="btn-tour-primary">Continuar ➔</button>
+        </div>
+      </div>
+    </div>
+  </aside>
+
+  <!-- Script da Aplicação -->
+  <script src="script.js"></script>
+</body>
+</html>

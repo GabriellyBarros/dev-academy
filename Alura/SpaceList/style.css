@@ -1,0 +1,1166 @@
+/* ==========================================================================
+   SpaceList - Folha de Estilos Avançada (CSS)
+   Desafio 3: Identidade Espacial, Gestão de Temas, Estatísticas e Mascote
+   ========================================================================== */
+
+/* 1. Definição de Variáveis e Temas (Design Tokens) */
+:root {
+  /* Fontes */
+  --font-main: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-brand: 'Orbitron', 'Inter', sans-serif;
+
+  /* Transições e Bordas */
+  --radius-xl: 18px;
+  --radius-lg: 14px;
+  --radius-md: 10px;
+  --radius-sm: 6px;
+  --transition-fast: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-smooth: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* TEMA ESCURO: ESPAÇO PROFUNDO */
+[data-theme="dark"] {
+  --bg-space: #070b14;
+  --bg-gradient: radial-gradient(circle at 50% 10%, #1e1b4b 0%, #0c1222 50%, #060911 100%);
+  --card-bg: rgba(15, 23, 42, 0.82);
+  --card-border: rgba(99, 102, 241, 0.25);
+  --card-border-hover: rgba(129, 140, 248, 0.5);
+  --card-inner-bg: rgba(30, 41, 59, 0.65);
+  --text-primary: #f8fafc;
+  --text-secondary: #94a3b8;
+  --text-muted: #64748b;
+  --border-subtle: rgba(148, 163, 184, 0.15);
+
+  /* Acentos de Missão */
+  --accent-primary: #6366f1;
+  --accent-primary-hover: #4f46e5;
+  --accent-cyan: #38bdf8;
+  --accent-warning: #f59e0b;
+  --accent-warning-bg: rgba(245, 158, 11, 0.12);
+  --accent-info: #0284c7;
+  --accent-info-bg: rgba(2, 132, 199, 0.14);
+  --accent-success: #10b981;
+  --accent-success-bg: rgba(16, 185, 129, 0.14);
+  --accent-danger: #ef4444;
+
+  /* Efeitos e Sombras */
+  --shadow-glow: 0 0 25px rgba(99, 102, 241, 0.22);
+  --shadow-card: 0 16px 36px -8px rgba(0, 0, 0, 0.6);
+  --mascot-flame-display: none;
+}
+
+/* TEMA CLARO: BASE DE LANÇAMENTO */
+[data-theme="light"] {
+  --bg-space: #f1f5f9;
+  --bg-gradient: linear-gradient(135deg, #e0e7ff 0%, #f1f5f9 45%, #f8fafc 100%);
+  --card-bg: #ffffff;
+  --card-border: #cbd5e1;
+  --card-border-hover: #818cf8;
+  --card-inner-bg: #f8fafc;
+  --text-primary: #0f172a;
+  --text-secondary: #475569;
+  --text-muted: #64748b;
+  --border-subtle: #e2e8f0;
+
+  /* Acentos de Missão */
+  --accent-primary: #4f46e5;
+  --accent-primary-hover: #4338ca;
+  --accent-cyan: #0284c7;
+  --accent-warning: #d97706;
+  --accent-warning-bg: #fffbeb;
+  --accent-info: #2563eb;
+  --accent-info-bg: #eff6ff;
+  --accent-success: #059669;
+  --accent-success-bg: #ecfdf5;
+  --accent-danger: #dc2626;
+
+  /* Efeitos e Sombras */
+  --shadow-glow: 0 0 20px rgba(99, 102, 241, 0.12);
+  --shadow-card: 0 12px 28px -6px rgba(15, 23, 42, 0.1);
+  --mascot-flame-display: none;
+}
+
+/* 2. Reset Geral e Base */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: var(--font-main);
+  background: var(--bg-space);
+  background-image: var(--bg-gradient);
+  background-attachment: fixed;
+  color: var(--text-primary);
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 30px 16px 60px;
+  position: relative;
+  overflow-x: hidden;
+  transition: background var(--transition-smooth), color var(--transition-smooth);
+}
+
+/* Fundo com estrelas cintilantes para o Espaço Profundo */
+.stars-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0.6;
+  transition: opacity var(--transition-smooth);
+}
+
+[data-theme="light"] .stars-container {
+  opacity: 0.1;
+}
+
+/* 3. Container Central do Painel Espacial */
+.app-container {
+  width: 100%;
+  max-width: 680px;
+  background: var(--card-bg);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid var(--card-border);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-card), var(--shadow-glow);
+  padding: 30px;
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+  transition: var(--transition-smooth);
+}
+
+/* 4. Cabeçalho e Identidade SpaceList */
+.app-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 16px;
+  padding-bottom: 18px;
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.header-brand {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.brand-icon {
+  width: 52px;
+  height: 52px;
+  border-radius: var(--radius-lg);
+  background: linear-gradient(135deg, var(--accent-primary), var(--accent-cyan));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 14px rgba(99, 102, 241, 0.4);
+  flex-shrink: 0;
+}
+
+.rocket-emoji {
+  font-size: 1.8rem;
+  display: inline-block;
+  animation: rocketPulse 3s ease-in-out infinite;
+}
+
+@keyframes rocketPulse {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  50% { transform: translateY(-3px) rotate(8deg); }
+}
+
+.app-title {
+  font-family: var(--font-brand);
+  font-size: 1.85rem;
+  font-weight: 800;
+  letter-spacing: -0.5px;
+  background: linear-gradient(90deg, #38bdf8, #818cf8, #c084fc);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.app-tagline {
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  font-weight: 500;
+}
+
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+/* Botão de Tema */
+.btn-theme,
+.btn-help {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 14px;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--card-border);
+  background: var(--card-inner-bg);
+  color: var(--text-primary);
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: var(--transition-fast);
+}
+
+.btn-theme:hover,
+.btn-help:hover {
+  border-color: var(--accent-primary);
+  background: var(--card-border);
+  transform: translateY(-1px);
+}
+
+/* 5. Painel de Estatísticas e Progresso Espacial */
+.stats-dashboard {
+  background: var(--card-inner-bg);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  padding: 18px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+}
+
+.stat-card {
+  padding: 12px 10px;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border-subtle);
+  background: var(--card-bg);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 4px;
+  transition: var(--transition-fast);
+}
+
+.stat-card:hover {
+  transform: translateY(-2px);
+  border-color: var(--card-border-hover);
+}
+
+.stat-icon {
+  font-size: 1.25rem;
+}
+
+.stat-label {
+  font-size: 0.72rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: var(--text-muted);
+}
+
+.stat-value {
+  font-family: var(--font-brand);
+  font-size: 1.45rem;
+  font-weight: 800;
+  color: var(--text-primary);
+}
+
+.stat-total .stat-value { color: var(--accent-cyan); }
+.stat-pending .stat-value { color: var(--accent-warning); }
+.stat-in-progress .stat-value { color: var(--accent-info); }
+.stat-completed .stat-value { color: var(--accent-success); }
+
+/* Barra de Progresso Dinâmica */
+.progress-section {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.progress-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.88rem;
+  font-weight: 600;
+}
+
+.progress-title {
+  color: var(--text-secondary);
+}
+
+.progress-percentage {
+  font-family: var(--font-brand);
+  font-size: 1.1rem;
+  font-weight: 800;
+  color: var(--accent-success);
+}
+
+.progress-bar-bg {
+  width: 100%;
+  height: 14px;
+  background: rgba(148, 163, 184, 0.2);
+  border-radius: 20px;
+  overflow: hidden;
+  position: relative;
+}
+
+.progress-bar-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #6366f1, #38bdf8, #10b981);
+  border-radius: 20px;
+  transition: width 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.progress-rocket {
+  font-size: 0.85rem;
+  margin-right: 2px;
+  display: inline-block;
+  transform: rotate(45deg);
+}
+
+/* 6. Seção do Mascote Astronauta */
+.mascot-section {
+  background: var(--card-inner-bg);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  padding: 16px 20px;
+  transition: var(--transition-smooth);
+}
+
+.mascot-card {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+}
+
+.mascot-avatar {
+  flex-shrink: 0;
+  position: relative;
+}
+
+.astronaut-svg {
+  animation: floatAstronaut 4s ease-in-out infinite;
+  filter: drop-shadow(0 6px 12px rgba(0, 0, 0, 0.3));
+}
+
+@keyframes floatAstronaut {
+  0%, 100% { transform: translateY(0px) rotate(0deg); }
+  50% { transform: translateY(-7px) rotate(2deg); }
+}
+
+/* Chamas do Jetpack */
+.jetpack-flame {
+  display: none;
+  transform-origin: top center;
+}
+
+/* Animação comemorativa do Mascote (100% de conclusão) */
+.mascot-card.celebration {
+  background: linear-gradient(135deg, rgba(16, 185, 129, 0.12), rgba(99, 102, 241, 0.15));
+  border: 1px solid var(--accent-success);
+  border-radius: var(--radius-md);
+  padding: 6px;
+}
+
+.mascot-card.celebration .jetpack-flame {
+  display: block;
+  animation: jetpackThrust 0.25s infinite alternate ease-in-out;
+}
+
+.mascot-card.celebration .astronaut-svg {
+  animation: celebrateAstronaut 1.2s ease-in-out infinite alternate;
+}
+
+@keyframes jetpackThrust {
+  0% { transform: scaleY(0.85) scaleX(0.9); }
+  100% { transform: scaleY(1.3) scaleX(1.1); }
+}
+
+@keyframes celebrateAstronaut {
+  0% { transform: translateY(-3px) rotate(-4deg); }
+  100% { transform: translateY(-16px) rotate(4deg); }
+}
+
+.antenna-blink {
+  animation: blinkRed 1.5s infinite;
+}
+
+@keyframes blinkRed {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.3; }
+}
+
+.mascot-speech {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  flex: 1;
+}
+
+.mascot-badge {
+  font-size: 0.76rem;
+  font-weight: 700;
+  color: var(--accent-cyan);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.mascot-dialogue {
+  font-size: 0.92rem;
+  line-height: 1.45;
+  color: var(--text-primary);
+  font-style: italic;
+}
+
+/* 7. Formulário de Lançamento de Missão */
+.task-form {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.input-group {
+  display: flex;
+  align-items: center;
+  background: var(--card-inner-bg);
+  border: 2px solid var(--card-border);
+  border-radius: var(--radius-md);
+  padding: 6px 10px;
+  gap: 10px;
+  transition: var(--transition-fast);
+}
+
+.input-group:focus-within {
+  border-color: var(--accent-primary);
+  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.2);
+}
+
+.input-icon {
+  font-size: 1.2rem;
+  padding-left: 4px;
+}
+
+.input-group input {
+  flex: 1;
+  background: none;
+  border: none;
+  outline: none;
+  font-size: 0.98rem;
+  font-family: var(--font-main);
+  color: var(--text-primary);
+  padding: 8px 4px;
+}
+
+.input-group input::placeholder {
+  color: var(--text-muted);
+}
+
+.btn-launch {
+  background: linear-gradient(135deg, var(--accent-primary), var(--accent-primary-hover));
+  color: #ffffff;
+  border: none;
+  border-radius: var(--radius-sm);
+  padding: 10px 18px;
+  font-size: 0.92rem;
+  font-weight: 700;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  transition: var(--transition-fast);
+  white-space: nowrap;
+}
+
+.btn-launch:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 14px rgba(99, 102, 241, 0.4);
+}
+
+.btn-launch:active {
+  transform: translateY(0);
+}
+
+.error-message {
+  color: var(--accent-danger);
+  font-size: 0.82rem;
+  font-weight: 600;
+  min-height: 16px;
+}
+
+/* 8. Filtros e Controles de Missões */
+.task-controls {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.filters {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.filter-btn {
+  background: var(--card-inner-bg);
+  border: 1px solid var(--border-subtle);
+  color: var(--text-secondary);
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-size: 0.82rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: var(--transition-fast);
+}
+
+.filter-btn:hover {
+  border-color: var(--accent-primary);
+  color: var(--text-primary);
+}
+
+.filter-btn.active {
+  background: var(--accent-primary);
+  border-color: var(--accent-primary);
+  color: #ffffff;
+}
+
+.btn-clear {
+  background: none;
+  border: none;
+  color: var(--text-muted);
+  font-size: 0.8rem;
+  font-weight: 600;
+  cursor: pointer;
+  padding: 4px 8px;
+  border-radius: var(--radius-sm);
+  transition: var(--transition-fast);
+}
+
+.btn-clear:hover {
+  color: var(--accent-danger);
+  background: rgba(239, 68, 68, 0.1);
+}
+
+/* 9. Lista de Missões (Task List) */
+.task-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  max-height: 480px;
+  overflow-y: auto;
+  padding-right: 4px;
+}
+
+.task-list::-webkit-scrollbar {
+  width: 6px;
+}
+.task-list::-webkit-scrollbar-thumb {
+  background: var(--border-subtle);
+  border-radius: 4px;
+}
+
+/* Cada Item de Missão */
+.task-item {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  padding: 14px 16px;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--card-border);
+  background: var(--card-inner-bg);
+  border-left: 6px solid #64748b;
+  gap: 14px;
+  transition: var(--transition-fast);
+  animation: fadeInTask 0.3s ease-out;
+}
+
+@keyframes fadeInTask {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ==========================================================================
+   Diferenciação Visual Robusta por Estado da Missão
+   ========================================================================== */
+
+/* ESTADO 1: PENDENTE (⏳) */
+.task-item.status-pending {
+  border-left-color: var(--accent-warning);
+  background: var(--card-inner-bg);
+}
+.task-item.status-pending:hover {
+  border-color: var(--accent-warning);
+  box-shadow: 0 4px 14px rgba(245, 158, 11, 0.12);
+}
+
+/* ESTADO 2: EM ANDAMENTO (☄️) */
+.task-item.status-in_progress {
+  border-left-color: var(--accent-info);
+  background: var(--accent-info-bg);
+  box-shadow: 0 0 16px rgba(2, 132, 199, 0.18);
+}
+.task-item.status-in_progress:hover {
+  border-color: var(--accent-cyan);
+}
+.task-item.status-in_progress .custom-checkbox {
+  border-color: var(--accent-info);
+  background: rgba(2, 132, 199, 0.2);
+}
+.task-item.status-in_progress .custom-checkbox::after {
+  content: "☄️";
+  font-size: 11px;
+  display: block;
+}
+
+/* ESTADO 3: CONCLUÍDO (🚩) */
+.task-item.status-completed {
+  border-left-color: var(--accent-success);
+  background: var(--accent-success-bg);
+  opacity: 0.88;
+}
+.task-item.status-completed:hover {
+  opacity: 1;
+}
+.task-item.status-completed .custom-checkbox {
+  background: var(--accent-success);
+  border-color: var(--accent-success);
+}
+.task-item.status-completed .custom-checkbox::after {
+  content: "🚩";
+  font-size: 12px;
+  display: block;
+}
+.task-item.status-completed .task-text {
+  text-decoration: line-through;
+  color: var(--text-muted);
+}
+
+/* Estrutura interna do card da missão */
+.task-left {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  flex: 1;
+  min-width: 0;
+}
+
+.custom-checkbox {
+  width: 24px;
+  height: 24px;
+  border: 2px solid var(--card-border);
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  margin-top: 2px;
+  cursor: pointer;
+  background: var(--card-bg);
+  transition: var(--transition-fast);
+}
+
+.custom-checkbox:hover {
+  border-color: var(--accent-primary);
+  transform: scale(1.08);
+}
+
+.task-content {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  flex: 1;
+  min-width: 0;
+}
+
+.task-text {
+  font-size: 0.98rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  line-height: 1.4;
+  word-break: break-word;
+}
+
+/* Datas e Metadados Automáticos da Missão */
+.task-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 10px;
+  font-size: 0.74rem;
+}
+
+.meta-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 3px 8px;
+  border-radius: 4px;
+  font-weight: 600;
+  background: rgba(148, 163, 184, 0.15);
+  color: var(--text-secondary);
+}
+
+.meta-badge.start-badge {
+  background: rgba(2, 132, 199, 0.18);
+  color: var(--accent-cyan);
+}
+
+.meta-badge.finish-badge {
+  background: rgba(16, 185, 129, 0.2);
+  color: var(--accent-success);
+}
+
+/* Lado Direito: Dropdown de Estado + Excluir */
+.task-right {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+.status-select {
+  padding: 6px 10px;
+  font-size: 0.8rem;
+  font-weight: 700;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--card-border);
+  background: var(--card-bg);
+  color: var(--text-primary);
+  cursor: pointer;
+  outline: none;
+  transition: var(--transition-fast);
+}
+
+.status-select:hover {
+  border-color: var(--accent-primary);
+}
+
+.btn-delete {
+  background: none;
+  border: none;
+  color: var(--text-muted);
+  cursor: pointer;
+  padding: 6px;
+  border-radius: var(--radius-sm);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: var(--transition-fast);
+}
+
+.btn-delete:hover {
+  color: var(--accent-danger);
+  background: rgba(239, 68, 68, 0.15);
+}
+
+.btn-delete svg {
+  width: 18px;
+  height: 18px;
+}
+
+/* 10. Estado Vazio (Pesquisa / Mapa Estelar) */
+.empty-state {
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 34px 18px;
+  gap: 10px;
+  border: 2px dashed var(--border-subtle);
+  border-radius: var(--radius-lg);
+  background: var(--card-inner-bg);
+}
+
+.empty-state.visible {
+  display: flex;
+}
+
+.empty-emoji {
+  font-size: 3rem;
+  animation: floatEmpty 3s ease-in-out infinite;
+  display: inline-block;
+}
+
+@keyframes floatEmpty {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-6px); }
+}
+
+.empty-title {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.empty-desc {
+  font-size: 0.88rem;
+  color: var(--text-secondary);
+  max-width: 440px;
+  line-height: 1.5;
+}
+
+/* 11. Rodapé Acadêmico */
+.app-footer {
+  padding-top: 14px;
+  border-top: 1px solid var(--border-subtle);
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  text-align: center;
+  font-size: 0.78rem;
+  color: var(--text-muted);
+}
+
+.footer-academic {
+  color: var(--accent-cyan);
+  font-weight: 600;
+}
+
+/* ==========================================================================
+   12. Tutorial Interativo (Tour do Astronauta)
+   ========================================================================== */
+.tour-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: radial-gradient(circle at center, rgba(15, 23, 42, 0.94) 0%, rgba(6, 9, 18, 0.97) 100%);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  z-index: 9998;
+  display: none;
+  overflow: hidden;
+  transition: opacity 0.35s ease;
+  pointer-events: all;
+}
+
+.tour-backdrop.active {
+  display: block;
+}
+
+/* Camadas de estrelas piscando via CSS keyframes no backdrop */
+.tour-backdrop::before,
+.tour-backdrop::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.tour-backdrop::before {
+  background-image: 
+    radial-gradient(1.5px 1.5px at 12% 18%, #ffffff, transparent),
+    radial-gradient(2px 2px at 28% 12%, #38bdf8, transparent),
+    radial-gradient(1px 1px at 48% 22%, #ffffff, transparent),
+    radial-gradient(2.5px 2.5px at 68% 15%, #818cf8, transparent),
+    radial-gradient(1.5px 1.5px at 88% 26%, #ffffff, transparent),
+    radial-gradient(2px 2px at 18% 68%, #ffffff, transparent),
+    radial-gradient(1.5px 1.5px at 38% 82%, #818cf8, transparent),
+    radial-gradient(2.5px 2.5px at 62% 72%, #38bdf8, transparent),
+    radial-gradient(1.5px 1.5px at 82% 78%, #ffffff, transparent);
+  background-size: 100% 100%;
+  animation: twinkleBackdropA 3s infinite ease-in-out alternate;
+}
+
+.tour-backdrop::after {
+  background-image: 
+    radial-gradient(2px 2px at 22% 42%, #ffffff, transparent),
+    radial-gradient(1.5px 1.5px at 42% 52%, #fef08a, transparent),
+    radial-gradient(2.5px 2.5px at 58% 38%, #ffffff, transparent),
+    radial-gradient(1.2px 1.2px at 78% 58%, #38bdf8, transparent),
+    radial-gradient(2px 2px at 8% 82%, #ffffff, transparent),
+    radial-gradient(1.5px 1.5px at 72% 88%, #818cf8, transparent),
+    radial-gradient(2px 2px at 86% 14%, #ffffff, transparent),
+    radial-gradient(1.5px 1.5px at 94% 48%, #38bdf8, transparent);
+  background-size: 100% 100%;
+  animation: twinkleBackdropB 3.8s infinite ease-in-out alternate 1.2s;
+}
+
+@keyframes twinkleBackdropA {
+  0% { opacity: 0.35; transform: scale(0.99); }
+  50% { opacity: 0.9; }
+  100% { opacity: 1; transform: scale(1.01); }
+}
+
+@keyframes twinkleBackdropB {
+  0% { opacity: 0.25; }
+  50% { opacity: 0.95; transform: scale(1.01); }
+  100% { opacity: 0.45; transform: scale(0.99); }
+}
+
+/* Animação Temática: Foguete Espacial cruzando a tela em diagonal ao fundo */
+.tour-rocket-voyage {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 140px;
+  height: 60px;
+  pointer-events: none;
+  z-index: 9998;
+  animation: crossSpaceRocket 7.5s cubic-bezier(0.25, 1, 0.5, 1) infinite;
+  opacity: 0;
+}
+
+.tour-rocket-ship {
+  font-size: 2.4rem;
+  display: inline-block;
+  transform: rotate(0deg);
+  filter: drop-shadow(0 0 12px rgba(56, 189, 248, 0.85));
+}
+
+.tour-rocket-trail {
+  position: absolute;
+  top: 24px;
+  left: -85px;
+  width: 95px;
+  height: 4px;
+  background: linear-gradient(90deg, transparent, rgba(249, 115, 22, 0.4), #f97316, #fef08a);
+  border-radius: 2px;
+  filter: blur(1px);
+  box-shadow: 0 0 8px #f97316;
+}
+
+@keyframes crossSpaceRocket {
+  0% {
+    opacity: 0;
+    transform: translate(-120px, calc(100vh - 40px)) rotate(-30deg);
+  }
+  6% {
+    opacity: 1;
+  }
+  86% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    transform: translate(calc(100vw + 120px), -120px) rotate(-30deg);
+  }
+}
+
+/* Elemento destacado durante o tour */
+.tour-spotlight {
+  position: relative;
+  z-index: 9999 !important;
+  box-shadow: 0 0 0 4px var(--accent-primary), 0 0 35px rgba(99, 102, 241, 0.7) !important;
+  border-radius: var(--radius-md) !important;
+  transition: box-shadow 0.3s ease;
+}
+
+/* 1. Centralização do Modal: exatamente no centro da tela */
+.tour-box {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  max-width: 500px;
+  width: min(92vw, 500px);
+  z-index: 10000;
+  display: none;
+  animation: centerTourIn 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.tour-box.active {
+  display: block;
+}
+
+@keyframes centerTourIn {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -46%) scale(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+}
+
+.tour-card {
+  background: var(--card-bg);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border: 2px solid var(--accent-primary);
+  border-radius: var(--radius-xl);
+  box-shadow: 0 24px 48px rgba(0, 0, 0, 0.6), var(--shadow-glow);
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.tour-header {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.tour-mascot-icon {
+  font-size: 2.3rem;
+  background: rgba(99, 102, 241, 0.2);
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 0 16px rgba(99, 102, 241, 0.3);
+}
+
+.tour-title {
+  font-size: 1.08rem;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.tour-step-counter {
+  font-size: 0.76rem;
+  color: var(--accent-cyan);
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.tour-text {
+  font-size: 0.94rem;
+  color: var(--text-secondary);
+  line-height: 1.55;
+}
+
+.tour-actions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+}
+
+.tour-nav-btns {
+  display: flex;
+  gap: 8px;
+}
+
+.btn-tour-primary {
+  background: var(--accent-primary);
+  color: #ffffff;
+  border: none;
+  border-radius: var(--radius-sm);
+  padding: 8px 16px;
+  font-size: 0.85rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: var(--transition-fast);
+}
+
+.btn-tour-primary:hover {
+  background: var(--accent-primary-hover);
+  transform: translateY(-1px);
+}
+
+.btn-tour-secondary {
+  background: var(--card-inner-bg);
+  color: var(--text-secondary);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-sm);
+  padding: 8px 12px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: var(--transition-fast);
+}
+
+.btn-tour-secondary:hover:not(:disabled) {
+  color: var(--text-primary);
+  border-color: var(--card-border);
+}
+
+.btn-tour-secondary:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+/* 13. Responsividade Móvel */
+@media (max-width: 640px) {
+  body {
+    padding: 16px 10px 40px;
+  }
+
+  .app-container {
+    padding: 20px 16px;
+  }
+
+  .stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .mascot-card {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .input-group {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .btn-launch {
+    justify-content: center;
+    width: 100%;
+  }
+
+  .task-controls {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .filters {
+    justify-content: center;
+  }
+
+  .btn-clear {
+    text-align: center;
+  }
+
+  .task-item {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .task-right {
+    justify-content: space-between;
+    padding-top: 10px;
+    border-top: 1px dashed var(--border-subtle);
+  }
+
+  .tour-box {
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    bottom: auto;
+    right: auto;
+    width: min(92vw, 440px);
+  }
+}
